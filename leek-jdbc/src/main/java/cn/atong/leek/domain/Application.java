@@ -1,6 +1,7 @@
-package cn.atong.leek.jdbc;
+package cn.atong.leek.domain;
 
-import cn.atong.leek.jdbc.entity.User;
+
+import cn.atong.leek.domain.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;

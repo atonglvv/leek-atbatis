@@ -1,4 +1,4 @@
-package cn.atong.leek.jdbc.entity;
+package cn.atong.leek.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
