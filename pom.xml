@@ -12,6 +12,7 @@
         <module>leek-jdbc</module>
         <module>leek-mapper</module>
         <module>leek-atbatis-domain</module>
+        <module>atbatis</module>
     </modules>
 
     <dependencyManagement>
