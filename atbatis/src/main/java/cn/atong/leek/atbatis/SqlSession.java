@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @program: leek-atbatis
- * @description: SqlSession
+ * @description: SqlSession 定义对数据库操作的查询接口
  * @author: atong
  * @create: 2021-07-14 22:33
  */
