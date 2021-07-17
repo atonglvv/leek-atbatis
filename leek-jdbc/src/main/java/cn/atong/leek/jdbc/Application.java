@@ -1,4 +1,4 @@
-package cn.atong.leek.domain;
+package cn.atong.leek.jdbc;
 
 
 import cn.atong.leek.domain.entity.User;

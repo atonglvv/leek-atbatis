@@ -13,6 +13,7 @@
         <module>leek-mapper</module>
         <module>leek-atbatis-domain</module>
         <module>atbatis</module>
+        <module>leek-source-read</module>
     </modules>
 
     <dependencyManagement>
