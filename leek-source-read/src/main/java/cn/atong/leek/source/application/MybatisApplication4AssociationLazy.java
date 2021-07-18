@@ -17,7 +17,7 @@ import java.util.List;
  * @author: atong
  * @create: 2021-07-18 18:34
  */
-public class MybatisApplication3AssociationLazy {
+public class MybatisApplication4AssociationLazy {
     public static void main(String[] args) throws IOException {
         InputStream xml = Resources.getResourceAsStream("mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(xml);
