@@ -14,6 +14,10 @@ import java.util.List;
  * 但 SqlSessionFactory 从哪来呢？
  * 肯定不可能我们自己创建吧，通常情况下一个工程在运行期只允许存在一个 SqlSessionFactory ，那应该怎么办呢？
  * 用构造方法注入就可以吧！或者 setter 方法注入进 DepartmentDaoImpl 都可以。
+ *
+ * But 原始Dao开发的弊端
+ * 可以发现，两个方法的方法名不同、参数列表不同，调用的 mapper 不同，返回值不同，其余的几乎完全相同！
+ * 我们也知道，更好地优化方案是使用 Mapper 动态代理的方式。
  * @author: atong
  * @create: 2021-07-17 21:51
  */
