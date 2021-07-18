@@ -2,6 +2,8 @@ package cn.atong.leek.domain.entity;
 
 import lombok.Data;
 
+import java.util.Set;
+
 /**
  * @program: leek-atbatis
  * @description:
@@ -13,4 +15,5 @@ public class Department {
     private Long id;
     private String name;
     private String tel;
+    private Set<User> users;
 }

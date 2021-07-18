@@ -4,11 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.atong.leek.source.mapper.DepartmentMapper">
 
-    <select id="findAll" resultType="cn.atong.leek.domain.entity.Department">
+    <resultMap id="department" type="cn.atong.leek.domain.entity.Department">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="tel" column="tel"/>
+        <collection property="users" ofType="cn.atong.leek.domain.entity.User"
+                    select="cn.atong.leek.source.mapper.UserMapper.findAllByDepartmentId" column="id"/>
+    </resultMap>
+
+
+    <!--注意此处是resultMap, 而不是resultType-->
+    <select id="findAll" resultMap="department">
         select * from department
     </select>
 
-    <select id="findById" parameterType="long" resultType="cn.atong.leek.domain.entity.Department">
+    <select id="findById" parameterType="long" resultMap="department">
         select * from department where id = #{id}
     </select>
 

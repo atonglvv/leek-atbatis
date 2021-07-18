@@ -16,13 +16,15 @@ public interface UserMapper {
 
     List<User> findAllUserWithDepLazy();
 
+    List<User> findAllByDepartmentId(Long id);
+
     List<User> findAll();
 
     int insert(User user);
 
     int update(User user);
 
-    int deleteById(String id);
+    int deleteById(Long id);
 
     User findById(Long id);
 }

@@ -20,6 +20,7 @@ public class User implements Serializable {
     private Long id;
     private String name;
     private Integer age;
+    private Long departmentId;
     private Department department;
 
 }

@@ -35,6 +35,11 @@
         select * from user
     </select>
 
+    <!--根据departmentId查询所有User信息-->
+    <select id="findAllByDepartmentId" parameterType="long" resultType="cn.atong.leek.domain.entity.User">
+        select * from user where department_id = #{departmentId}
+    </select>
+
     <select id="selectUserAll" resultType="cn.atong.leek.domain.entity.User">
         select * from user
     </select>
