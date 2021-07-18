@@ -14,6 +14,8 @@ public interface UserMapper {
 
     List<User> findAllUserWithDep();
 
+    List<User> findAllUserWithDepLazy();
+
     List<User> findAll();
 
     int insert(User user);
