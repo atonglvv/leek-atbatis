@@ -1,6 +1,7 @@
 package cn.atong.leek.source.dao;
 
 import cn.atong.leek.domain.entity.User;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
@@ -29,13 +30,21 @@ public class UserDaoImpl implements UserDao{
     }
 
 
+    /**
+     * 使用 try-with-resource 的方式，可以省略 sqlSession.close(); 的代码
+     * @return List<User>
+     */
     @Override
     public List<User> findAll() {
-        return null;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+            return sqlSession.selectList("userMapper.selectUserAll");
+        }
     }
 
     @Override
     public User findById(Long id) {
-        return null;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+            return sqlSession.selectOne("userMapper.findById", id);
+        }
     }
 }
