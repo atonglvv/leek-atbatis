@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.atong.leek.source.mapper.UserMapper">
+<mapper namespace="userBaseMapper">
 
     <select id="selectUserAll" resultType="cn.atong.leek.domain.entity.User">
         select * from user
     </select>
 
-    <select id="findById" parameterType="long" resultType="cn.atong.leek.domain.entity.User">
+    <select id="findById" parameterType="string" resultType="cn.atong.leek.domain.entity.User">
         select * from user where id = #{id}
     </select>
 
@@ -20,7 +20,7 @@
         update user set name = #{name}, age = #{age} where id = #{id}
     </update>
 
-    <delete id="deleteById" parameterType="long">
+    <delete id="deleteById" parameterType="string">
         delete from user where id = #{id}
     </delete>
 

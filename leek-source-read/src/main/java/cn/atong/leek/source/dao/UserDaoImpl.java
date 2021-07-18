@@ -41,14 +41,14 @@ public class UserDaoImpl implements UserDao{
     @Override
     public List<User> findAll() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            return sqlSession.selectList("userMapper.selectUserAll");
+            return sqlSession.selectList("userBaseMapper.selectUserAll");
         }
     }
 
     @Override
     public User findById(Long id) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-            return sqlSession.selectOne("userMapper.findById", id);
+            return sqlSession.selectOne("userBaseMapper.findById", id);
         }
     }
 }

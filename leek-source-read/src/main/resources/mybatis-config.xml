@@ -21,7 +21,9 @@
         </environment>
     </environments>
 
+    <!--注册Mapper-->
     <mappers>
         <mapper resource="mapper/userMapper.xml"/>
+        <mapper resource="mapper/userBaseMapper.xml"/>
     </mappers>
 </configuration>

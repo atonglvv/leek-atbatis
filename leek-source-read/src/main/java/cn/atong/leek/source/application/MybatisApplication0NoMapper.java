@@ -22,7 +22,8 @@ public class MybatisApplication0NoMapper {
         InputStream xmlStream = Resources.getResourceAsStream("mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(xmlStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<User> userList = sqlSession.selectList("userMapper.selectUserAll");
+        //namespace.statementId
+        List<User> userList = sqlSession.selectList("userBaseMapper.selectUserAll");
         userList.forEach(System.out::println);
 
     }
