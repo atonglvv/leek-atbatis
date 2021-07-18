@@ -11,7 +11,9 @@ import java.util.List;
  * @create: 2021-07-18 12:30
  */
 public interface UserMapper {
-    
+
+    List<User> findAllUserWithDep();
+
     List<User> findAll();
 
     int insert(User user);
