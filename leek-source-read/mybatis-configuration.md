@@ -38,3 +38,9 @@ properties 属性，它的作用是定义全局配置变量，并且它可以加
 - 借助 <properties> 的 resource / url 属性加载的外部化配置文件
 - 在 <properties> 中定义的配置属性
 
+
+## setting
+
+leek-source-read/mybatis-configuration-setting.jpg
+
+
