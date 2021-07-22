@@ -5,6 +5,8 @@
 
 <configuration>
 
+    <properties resource="jdbc.properties" />
+
     <settings>
         <setting name="logImpl" value="LOG4J"/>
     </settings>
@@ -13,10 +15,10 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://192.168.2.117:3306/draft?characterEncoding=utf-8"/>
-                <property name="username" value="root"/>
-                <property name="password" value="1230"/>
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
     </environments>
