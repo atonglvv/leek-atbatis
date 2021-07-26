@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.atong.leek.source.mapper.DepartmentMapper">
+
+    <resultMap id="department" type="cn.atong.leek.domain.entity.Department">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="tel" column="tel"/>
+        <collection property="users" ofType="cn.atong.leek.domain.entity.User"
+                    select="cn.atong.leek.source.mapper.UserMapper.findAllByDepartmentId" column="id"/>
+    </resultMap>
+
+
+    <!--注意此处是resultMap, 而不是resultType-->
+    <select id="findAll" resultMap="department">
+        select * from department
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="department">
+        select * from department where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="cn.atong.leek.domain.entity.Department">
+        insert into department (id, name, tel) values (#{id}, #{name}, #{tel})
+    </insert>
+
+    <update id="update" parameterType="cn.atong.leek.domain.entity.Department">
+        update department set name = #{name}, tel = #{tel} where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        delete from department where id = #{id}
+    </delete>
+
+</mapper>

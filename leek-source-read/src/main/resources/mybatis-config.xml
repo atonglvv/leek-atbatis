@@ -12,6 +12,11 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
+    <typeHandlers>
+        <typeHandler handler="cn.atong.leek.source.typehandler.DepartmentTypeHandler"
+                     javaType="cn.atong.leek.domain.entity.Department" jdbcType="VARCHAR"/>
+    </typeHandlers>
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
