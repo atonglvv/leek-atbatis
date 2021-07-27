@@ -95,8 +95,6 @@ EnumTypeHandler  | Enum | varchar / char
 
 
 
-
-
 ## objectFactory 对象工厂
 
 
@@ -110,6 +108,186 @@ EnumTypeHandler  | Enum | varchar / char
 
 
 ## mappers 映射器
+
+
+
+
+# 加载配置文件原理解读
+
+
+
+加载配置文件主要就这两行代码，如下：
+
+```xml
+InputStream xml = Resources.getResourceAsStream("mybatis-config.xml");
+SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(xml);
+```
+
+两行代码分别代表 xml的加载与解析
+
+
+
+## 全局配置文件的加载
+
+Java中加载文件，主要就两种方式：
+
+- IO
+- ClassLoader
+
+Mybatis配置文件的加载是借助 ClassLoader 来做得， 如下源码解析：
+
+```java
+public static InputStream getResourceAsStream(String resource) throws IOException {
+    return getResourceAsStream((ClassLoader)null, resource);
+}
+
+public static InputStream getResourceAsStream(ClassLoader loader, String resource) throws IOException {
+    InputStream in = classLoaderWrapper.getResourceAsStream(resource, loader);
+    if (in == null) {
+        throw new IOException("Could not find resource " + resource);
+    } else {
+        return in;
+    }
+}
+```
+
+**Resources.getResourceAsStream** 并没有传classLoader参数， 是  ClassLoaderWrapper类里自己初始化的 classLoader，如下代码：
+
+```java
+ClassLoader[] getClassLoaders(ClassLoader classLoader) {
+    return new ClassLoader[]{
+        classLoader, 
+        this.defaultClassLoader, 
+        Thread.currentThread().getContextClassLoader(), 
+        this.getClass().getClassLoader(), 
+        this.systemClassLoader
+    };
+}
+```
+
+下面是实际利用ClassLoader加载全局配置文件的底层源码：
+
+```java
+InputStream getResourceAsStream(String resource, ClassLoader[] classLoader) {
+    for (ClassLoader cl : classLoader) {
+        if (null != cl) {
+            // try to find the resource as passed
+            InputStream returnValue = cl.getResourceAsStream(resource);
+            // now, some class loaders want this leading "/", so we'll add it and try again if we didn't find the resource
+            if (null == returnValue) {
+                returnValue = cl.getResourceAsStream("/" + resource);
+            }
+            if (null != returnValue) {
+                return returnValue;
+            }
+        }
+    }
+    return null;
+}
+```
+
+
+
+## 解析配置文件
+
+```java
+SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(xml);
+```
+
+继续如下：
+
+```java
+public SqlSessionFactory build(InputStream inputStream) {
+    return this.build((InputStream)inputStream, (String)null, (Properties)null);
+}
+```
+
+
+
+```java
+public SqlSessionFactory build(InputStream inputStream, String environment, Properties properties) {
+    try {
+        XMLConfigBuilder parser = new XMLConfigBuilder(inputStream, environment, properties);
+        return build(parser.parse());
+    } // catch finally ......
+}
+```
+
+这里面用到的第一个底层核心组件，是 **`XMLConfigBuilder`** 。而这个  **`XMLConfigBuilder`**  ，继承了一个叫 **`BaseBuilder`** 的东西：
+
+```java
+public class XMLConfigBuilder extends BaseBuilder {
+}
+```
+
+
+
+### BaseBuilder
+
+`BaseBuilder` 顾名思义，它是一个基础的构造器，它的初始化需要传入 MyBatis 的全局配置对象 `Configuration` ：
+
+```java
+public abstract class BaseBuilder {
+    protected final Configuration configuration;
+    protected final TypeAliasRegistry typeAliasRegistry;
+    protected final TypeHandlerRegistry typeHandlerRegistry;
+
+    public BaseBuilder(Configuration configuration) {
+        this.configuration = configuration;
+        this.typeAliasRegistry = this.configuration.getTypeAliasRegistry();
+        this.typeHandlerRegistry = this.configuration.getTypeHandlerRegistry();
+    }
+    //省略。。。
+}
+```
+
+最终 MyBatis 初始化完成后，所有的配置项、Mapper 、statement 都会存放到`Configuration`。
+
+核心的处理逻辑并不在 `BaseBuilder` 中，回到实现类 `XMLConfigBuilder` 中。
+
+### XMLConfigBuilder
+
+#### 构造方法定义
+
+```java
+public class XMLConfigBuilder extends BaseBuilder {
+
+    private boolean parsed;
+    private final XPathParser parser;
+    private String environment;
+    private final ReflectorFactory localReflectorFactory = new DefaultReflectorFactory();
+    
+    public XMLConfigBuilder(InputStream inputStream, String environment, Properties props) {
+        // 注意这里new了一个XPathParser
+        this(new XPathParser(inputStream, true, props, new XMLMapperEntityResolver()), environment, props);
+    }
+
+    private XMLConfigBuilder(XPathParser parser, String environment, Properties props) {
+        //注意这里 new Configuration()
+        super(new Configuration());
+        ErrorContext.instance().resource("SQL Mapper Configuration");
+        this.configuration.setVariables(props);
+        this.parsed = false;
+        this.environment = environment;
+        this.parser = parser;
+    }
+}
+```
+
+注意源码中，它重载的构造方法不再需要 `InputStream` ，而是构造了一个 **`XPathParser`** 。
+
+#### 核心parse方法
+
+
+
+
+
+
+
+
+
+
+
 
 
 
