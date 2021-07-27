@@ -20,7 +20,7 @@ environments（环境配置）
 
  - - transactionManager（事务管理器）
  - - dataSource（数据源）
- 
+
 databaseIdProvider（数据库厂商标识）
 
 mappers（映射器）
@@ -60,18 +60,20 @@ typeAliases 类型别名的设置，是考虑到 mapper.xml 中我们每次写�
 于是 MyBatis 提供了类型别名的机制。
 
 ```xml
-    <typeAliases>
-        <!-- 逐个声明 -->
-        <typeAlias alias="Department" type="cn.atong.leek.domain.entity.Department"/>
-        
-        <!-- 包扫描
+<typeAliases>
+    <!-- 逐个声明 -->
+    <typeAlias alias="Department" type="cn.atong.leek.domain.entity.Department"/>
+
+    <!-- 包扫描
              以此法被扫描的实体类，别名为类名的首字母小写形式(类似于Bean -> bean)
         -->
-        <package name="cn.atong.leek.domain.entity"/>
-    </typeAliases>
+    <package name="cn.atong.leek.domain.entity"/>
+</typeAliases>
 ```
 
 ## typeHandlers 类型处理器
+
+就像在JDBC中，我们在PreparedStatement中设置预编译sql所需的参数或执行sql后根据结果集ResultSet对象获取得到的数据时，需要将数据库中的类型和java中字段的类型进行转换一样，在MyBatis中使用typeHandler来实现。所以说白了，typeHandlers就是用来完成javaType和jdbcType之间的转换。
 
 typeHandlers 类型处理器，它的意义是针对一个特定的 Java 类型，或者 jdbc 类型，采用特定的处理器来处理这个类型的字段。
 听起来这个概念很陌生，但实际上 MyBatis 本身内部就已经预置了好多好多类型处理器了
@@ -86,6 +88,28 @@ EnumTypeHandler  | Enum | varchar / char
 
 一般情况下，我们只需要使用 MyBatis 内置的这些 typeHandler 就完全够用，如果实在是满足不了需求，也没关系，我们可以针对某些特定的类型，自定义 typeHandler 来处理。
 
+
+
+### 定义TypeHandler实现类
+
+
+
+
+
+
+## objectFactory 对象工厂
+
+
+## plugins 插件
+
+
+## environments 环境
+
+
+## databaseIdProvider 数据库厂商标识
+
+
+## mappers 映射器
 
 
 
