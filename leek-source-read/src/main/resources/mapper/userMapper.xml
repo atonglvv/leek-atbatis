@@ -62,4 +62,9 @@
         delete from user where id = #{id}
     </delete>
 
+    <!--测试 flushCache 见 cn.atong.leek.source.configuration.FlushCacheApplication -->
+    <select id="cleanCache" resultType="int" flushCache="true">
+        select count(id) from user
+    </select>
+
 </mapper>

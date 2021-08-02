@@ -27,4 +27,6 @@ public interface UserMapper {
     int deleteById(Long id);
 
     User findById(Long id);
+
+    int cleanCache();
 }
