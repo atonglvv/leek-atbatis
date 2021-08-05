@@ -32,7 +32,10 @@ public class Application {
             connection = DriverManager.getConnection("jdbc:mysql://192.168.2.117:3306/draft", "root", "1230");
             // 3、获取数据库操作对象
             statement = connection.createStatement();
-            //数据库驱动查询到数据后，每次只从数据库拉取 fetchSize 指定量的数据，当这批数据都 next 完成后，再继续拉取下一批数据，以此来避免 OOM 现象的发生。
+            /*
+                数据库驱动查询到数据后，每次只从数据库拉取 fetchSize 指定量的数据，当这批数据都 next 完成后，再继续拉取下一批数据，以此来避免 OOM 现象的发生。
+                注意：setFetchSize Oracle 可以，高版本的 PostgreSQL (7.4+) 也可以，但 MySQL 不行
+             */
             statement.setFetchSize(1);
             // 4、定义操作的SQL语句  执行数据库操作
             resultSet = statement.executeQuery("select * from user");
